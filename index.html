@@ -28,6 +28,7 @@
   }
 
   .card {
+    position: relative;
     max-width: 480px;
     min-height: 100vh;
     min-height: 100dvh;
@@ -35,6 +36,13 @@
     background: #fff;
     display: flex;
     flex-direction: column;
+  }
+
+  #confetti {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
   }
 
   @media (min-width: 481px) {
@@ -69,8 +77,92 @@
 </head>
 <body>
   <div class="card">
+    <canvas id="confetti"></canvas>
     <img class="photo" src="assets/background.jpg" alt="">
     <p class="message">현재 모바일 청첩장은<br>준비중입니다.</p>
   </div>
+
+<script>
+(function () {
+  var canvas = document.getElementById('confetti');
+  var ctx = canvas.getContext('2d');
+  var card = canvas.parentElement;
+  var colors = ['#d4af37', '#f2a3ab', '#ffffff', '#9fc7a3', '#f6df8e'];
+  var particles = [];
+  var pendingBursts = 0;
+
+  function resize() {
+    canvas.width = card.clientWidth;
+    canvas.height = card.clientHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function burst(x, y) {
+    var count = 55;
+    for (var i = 0; i < count; i++) {
+      var angle = (Math.PI * 2 * i) / count + Math.random() * 0.3;
+      var speed = 2 + Math.random() * 4;
+      particles.push({
+        x: x, y: y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        size: 2.5 + Math.random() * 2.5,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        life: 1,
+        decay: 0.012 + Math.random() * 0.012
+      });
+    }
+  }
+
+  var running = false;
+  function loop() {
+    running = true;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (var i = particles.length - 1; i >= 0; i--) {
+      var p = particles[i];
+      p.vy += 0.06;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.life -= p.decay;
+      if (p.life <= 0) {
+        particles.splice(i, 1);
+        continue;
+      }
+      ctx.globalAlpha = Math.max(p.life, 0);
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    if (particles.length > 0 || pendingBursts > 0) {
+      requestAnimationFrame(loop);
+    } else {
+      running = false;
+    }
+  }
+
+  function scheduleBursts() {
+    var points = [
+      { x: 0.3, y: 0.28 },
+      { x: 0.7, y: 0.22 },
+      { x: 0.5, y: 0.34 }
+    ];
+    pendingBursts = points.length;
+    points.forEach(function (pt, i) {
+      setTimeout(function () {
+        burst(canvas.width * pt.x, canvas.height * pt.y);
+        pendingBursts--;
+        if (!running) loop();
+      }, i * 350);
+    });
+  }
+
+  window.addEventListener('load', function () {
+    setTimeout(scheduleBursts, 200);
+  });
+})();
+</script>
 </body>
 </html>
