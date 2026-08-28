@@ -10,7 +10,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="모바일 청첩장 준비중">
 <meta property="og:description" content="현재 모바일 청첩장은 준비중입니다.">
-<meta property="og:image" content="https://yeoneon.github.io/wedding-teaser/assets/background.jpg">
+<meta property="og:image" content="https://yeoneon.github.io/wedding-teaser/assets/wedding-teaser-image.jpg">
 <meta property="og:url" content="https://yeoneon.github.io/wedding-teaser/">
 
 <style>
@@ -33,9 +33,17 @@
     min-height: 100vh;
     min-height: 100dvh;
     margin: 0 auto;
-    background: #fff;
-    display: flex;
-    flex-direction: column;
+    overflow: hidden;
+    background-image: url("assets/wedding-teaser-image.jpg");
+    background-size: cover;
+    background-position: center;
+  }
+
+  .card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.28);
   }
 
   #confetti {
@@ -52,33 +60,31 @@
       padding: 32px 0;
     }
     .card {
-      min-height: auto;
       border-radius: 12px;
       box-shadow: 0 8px 40px rgba(0,0,0,0.12);
-      overflow: hidden;
     }
   }
 
-  .photo {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-
   .message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 100%;
     text-align: center;
-    padding: 56px 24px;
-    color: #333;
-    font-size: clamp(17px, 4.6vw, 22px);
+    padding: 0 24px;
+    color: #fff;
+    font-size: clamp(19px, 5vw, 24px);
     line-height: 1.7;
     letter-spacing: 0.02em;
+    text-shadow: 0 2px 14px rgba(0,0,0,0.4);
   }
 </style>
 </head>
 <body>
   <div class="card">
     <canvas id="confetti"></canvas>
-    <img class="photo" src="assets/background.jpg" alt="">
     <p class="message">현재 모바일 청첩장은<br>준비중입니다.</p>
   </div>
 
@@ -145,9 +151,9 @@
 
   function scheduleBursts() {
     var points = [
-      { x: 0.3, y: 0.28 },
-      { x: 0.7, y: 0.22 },
-      { x: 0.5, y: 0.34 }
+      { x: 0.28, y: 0.38 },
+      { x: 0.72, y: 0.34 },
+      { x: 0.5, y: 0.46 }
     ];
     pendingBursts = points.length;
     points.forEach(function (pt, i) {
