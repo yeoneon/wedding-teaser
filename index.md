@@ -13,8 +13,8 @@ layout: none
 <meta property="og:type" content="website">
 <meta property="og:title" content="모바일 청첩장 준비중">
 <meta property="og:description" content="현재 모바일 청첩장은 준비중입니다.">
-<meta property="og:image" content="https://YOUR_USERNAME.github.io/YOUR_REPO/assets/background.jpg">
-<meta property="og:url" content="https://YOUR_USERNAME.github.io/YOUR_REPO/">
+<meta property="og:image" content="https://yeoneon.github.io/wedding-teaser/assets/background.jpg">
+<meta property="og:url" content="https://yeoneon.github.io/wedding-teaser/">
 
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
