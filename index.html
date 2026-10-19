@@ -24,10 +24,10 @@
     min-height: 100vh;
     min-height: 100dvh;
     background: #e2cfc8;
+    font-family: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
   }
 
   .card {
-    position: relative;
     max-width: 480px;
     min-height: 100vh;
     min-height: 100dvh;
@@ -35,7 +35,8 @@
     overflow: hidden;
     background: #e2cfc8;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .poster {
@@ -44,11 +45,32 @@
     height: auto;
   }
 
-  #confetti {
-    position: absolute;
-    inset: 0;
-    z-index: 5;
-    pointer-events: none;
+  .map {
+    padding: 4px 24px 40px;
+    text-align: center;
+  }
+
+  .map-place {
+    margin-bottom: 14px;
+    color: #4a3b37;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+  }
+
+  .map-button {
+    display: block;
+    padding: 16px 20px;
+    border-radius: 999px;
+    background: #4a3b37;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .map-button:active {
+    opacity: 0.85;
   }
 
   @media (min-width: 481px) {
@@ -69,91 +91,11 @@
   <div class="card">
     <img class="poster" src="assets/wedding-teaser-party.png"
          alt="신랑측 피로연 안내. 거리가 멀어 예식에 참석하기 어려운 분들을 위해 혼례에 앞서 피로연 자리를 마련하였습니다. 귀한 발걸음으로 두 사람의 앞날을 축복해 주시면 감사하겠습니다. 혼주 정권화·김윤자, 신랑 정연언·신부 방주원. 일시 2027년 12월 19일(토) 오전 11시, 장소 합천 대양면 복지회관.">
-    <canvas id="confetti"></canvas>
+
+    <div class="map">
+      <p class="map-place">합천 대양면 복지회관</p>
+      <a class="map-button" href="https://naver.me/FbqlNj9m" target="_blank" rel="noopener">네이버 지도에서 위치 보기</a>
+    </div>
   </div>
-
-<script>
-(function () {
-  var canvas = document.getElementById('confetti');
-  var ctx = canvas.getContext('2d');
-  var card = canvas.parentElement;
-  var colors = ['#d4af37', '#f2a3ab', '#ffffff', '#9fc7a3', '#f6df8e'];
-  var particles = [];
-  var pendingBursts = 0;
-
-  function resize() {
-    canvas.width = card.clientWidth;
-    canvas.height = card.clientHeight;
-  }
-  window.addEventListener('resize', resize);
-  resize();
-
-  function burst(x, y) {
-    var count = 55;
-    for (var i = 0; i < count; i++) {
-      var angle = (Math.PI * 2 * i) / count + Math.random() * 0.3;
-      var speed = 2 + Math.random() * 4;
-      particles.push({
-        x: x, y: y,
-        vx: Math.cos(angle) * speed,
-        vy: Math.sin(angle) * speed,
-        size: 2.5 + Math.random() * 2.5,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        life: 1,
-        decay: 0.012 + Math.random() * 0.012
-      });
-    }
-  }
-
-  var running = false;
-  function loop() {
-    running = true;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (var i = particles.length - 1; i >= 0; i--) {
-      var p = particles[i];
-      p.vy += 0.06;
-      p.x += p.vx;
-      p.y += p.vy;
-      p.life -= p.decay;
-      if (p.life <= 0) {
-        particles.splice(i, 1);
-        continue;
-      }
-      ctx.globalAlpha = Math.max(p.life, 0);
-      ctx.fillStyle = p.color;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    ctx.globalAlpha = 1;
-    if (particles.length > 0 || pendingBursts > 0) {
-      requestAnimationFrame(loop);
-    } else {
-      running = false;
-    }
-  }
-
-  function scheduleBursts() {
-    var points = [
-      { x: 0.28, y: 0.38 },
-      { x: 0.72, y: 0.34 },
-      { x: 0.5, y: 0.46 }
-    ];
-    pendingBursts = points.length;
-    points.forEach(function (pt, i) {
-      setTimeout(function () {
-        burst(canvas.width * pt.x, canvas.height * pt.y);
-        pendingBursts--;
-        if (!running) loop();
-      }, i * 350);
-    });
-  }
-
-  window.addEventListener('load', function () {
-    resize();
-    setTimeout(scheduleBursts, 200);
-  });
-})();
-</script>
 </body>
 </html>
