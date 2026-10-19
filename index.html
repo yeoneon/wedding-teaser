@@ -3,14 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>모바일 청첩장 준비중</title>
+<title>신랑측 피로연 안내</title>
 
-<!-- 카카오톡/문자 등으로 링크 공유 시 미리보기에 쓰이는 태그입니다.
-     아래 og:url, og:image는 배포 후 실제 주소로 바꿔주세요. -->
+<!-- 카카오톡/문자 등으로 링크 공유 시 미리보기에 쓰이는 태그입니다. -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="모바일 청첩장 준비중">
-<meta property="og:description" content="현재 모바일 청첩장은 준비중입니다.">
-<meta property="og:image" content="https://yeoneon.github.io/wedding-teaser/assets/wedding-teaser-image.jpg">
+<meta property="og:title" content="신랑측 피로연 안내">
+<meta property="og:description" content="귀한 발걸음으로 두 사람의 앞날을 축복해 주시면 감사하겠습니다.">
+<meta property="og:image" content="https://yeoneon.github.io/wedding-teaser/assets/wedding-teaser-party.png">
 <meta property="og:url" content="https://yeoneon.github.io/wedding-teaser/">
 
 <style>
@@ -20,11 +19,11 @@
     height: 100%;
   }
 
+  /* 안내문 이미지의 배경색과 맞춰서, 화면이 더 길어도 이음새 없이 이어지게 합니다. */
   body {
     min-height: 100vh;
     min-height: 100dvh;
-    background: #e9e7e2;
-    font-family: "Nanum Myeongjo", "Apple SD Gothic Neo", "Malgun Gothic", serif;
+    background: #e2cfc8;
   }
 
   .card {
@@ -34,16 +33,15 @@
     min-height: 100dvh;
     margin: 0 auto;
     overflow: hidden;
-    background-image: url("assets/wedding-teaser-image.jpg");
-    background-size: cover;
-    background-position: center;
+    background: #e2cfc8;
+    display: flex;
+    align-items: center;
   }
 
-  .card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.28);
+  .poster {
+    display: block;
+    width: 100%;
+    height: auto;
   }
 
   #confetti {
@@ -60,32 +58,18 @@
       padding: 32px 0;
     }
     .card {
+      min-height: auto;
       border-radius: 12px;
       box-shadow: 0 8px 40px rgba(0,0,0,0.12);
     }
-  }
-
-  .message {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    width: 100%;
-    text-align: center;
-    padding: 0 24px;
-    color: #fff;
-    font-size: clamp(19px, 5vw, 24px);
-    line-height: 1.7;
-    letter-spacing: 0.02em;
-    text-shadow: 0 2px 14px rgba(0,0,0,0.4);
   }
 </style>
 </head>
 <body>
   <div class="card">
+    <img class="poster" src="assets/wedding-teaser-party.png"
+         alt="신랑측 피로연 안내. 거리가 멀어 예식에 참석하기 어려운 분들을 위해 혼례에 앞서 피로연 자리를 마련하였습니다. 귀한 발걸음으로 두 사람의 앞날을 축복해 주시면 감사하겠습니다. 혼주 정권화·김윤자, 신랑 정연언·신부 방주원. 일시 2027년 12월 19일(토) 오전 11시, 장소 합천 대양면 복지회관.">
     <canvas id="confetti"></canvas>
-    <p class="message">현재 모바일 청첩장은<br>준비중입니다.</p>
   </div>
 
 <script>
@@ -166,6 +150,7 @@
   }
 
   window.addEventListener('load', function () {
+    resize();
     setTimeout(scheduleBursts, 200);
   });
 })();
