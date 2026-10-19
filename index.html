@@ -15,10 +15,6 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  html, body {
-    height: 100%;
-  }
-
   /* 안내문 이미지의 배경색과 맞춰서, 화면이 더 길어도 이음새 없이 이어지게 합니다. */
   body {
     min-height: 100vh;
@@ -45,16 +41,10 @@
     height: auto;
   }
 
+  /* 아래쪽 여백은 폰의 하단 바(홈 인디케이터, 브라우저 툴바)에 가려지지 않도록 넉넉히 둡니다. */
   .map {
-    padding: 4px 24px 40px;
+    padding: 8px 24px calc(72px + env(safe-area-inset-bottom));
     text-align: center;
-  }
-
-  .map-place {
-    margin-bottom: 14px;
-    color: #4a3b37;
-    font-size: 15px;
-    letter-spacing: 0.02em;
   }
 
   .map-button {
@@ -93,7 +83,6 @@
          alt="신랑측 피로연 안내. 거리가 멀어 예식에 참석하기 어려운 분들을 위해 혼례에 앞서 피로연 자리를 마련하였습니다. 귀한 발걸음으로 두 사람의 앞날을 축복해 주시면 감사하겠습니다. 혼주 정권화·김윤자, 신랑 정연언·신부 방주원. 일시 2027년 12월 19일(토) 오전 11시, 장소 합천 대양면 복지회관.">
 
     <div class="map">
-      <p class="map-place">합천 대양면 복지회관</p>
       <a class="map-button" href="https://naver.me/FbqlNj9m" target="_blank" rel="noopener">네이버 지도에서 위치 보기</a>
     </div>
   </div>
